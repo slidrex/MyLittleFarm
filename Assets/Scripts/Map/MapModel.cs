@@ -8,14 +8,12 @@ public sealed class MapModel : MonoBehaviour
     [SerializeField] private SpriteRenderer _mapSpriteRenderer;
     [SerializeField] private Grid _mapGrid;
     [SerializeField] private GridLayout _mapLayout;
-    [SerializeField] private BuildingModel _buildingModel;
     public static Vector2Int MapSize { get; private set; }
     public static Vector2Int MinFreeMapPosition { get; private set; }
     public static Vector2Int MaxFreeMapPosition { get; private set; }
     public void InitMap(Vector2Int mapSize)
     {
         SetMapSize(mapSize);
-        _buildingModel.SpawnInitialBuildings(this);
     }
     public void ExpandMap(bool horizontal)
     {
