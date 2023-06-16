@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2226c56c214ac1c449744c319095edfd, type: 3}
+  m_Name: TestSquare
+  m_EditorClassIdentifier: 
+  IconImage: {fileID: -1139363030, guid: c81fd5150a15f1f43b7f317ac3d702fa, type: 3}
+  Name: Wheat Field
+  GoldPerSecond: 91
+  Price: 1000
+  Object: {fileID: 2245295612130998583, guid: a1d48db1e9fc102479a30d9c09e73602, type: 3}

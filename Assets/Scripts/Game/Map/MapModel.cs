@@ -35,4 +35,5 @@ public sealed class MapModel : MonoBehaviour
         Vector2Int position = new Vector2Int(Random.Range(MinFreeMapPosition.x, MaxFreeMapPosition.x - tileSize.x + 2), Random.Range(MinFreeMapPosition.y, MaxFreeMapPosition.y - tileSize.y + 2));
         return position;
     }
+    public static bool IsInsidePlot(Vector2 position) => position.x >= MinFreeMapPosition.x && position.x <= MaxFreeMapPosition.x && position.y <= MaxFreeMapPosition.y && position.x >= MinFreeMapPosition.y;
 }
