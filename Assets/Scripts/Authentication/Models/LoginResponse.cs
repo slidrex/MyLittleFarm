@@ -21,5 +21,6 @@ public struct BuildingModel
     public int PositionX { get; set; }
     public int PositionY { get; set; }
     public int Level { get; set; }
+    public int BuildingId { get; set; }
     public int BuildingTempalteId { get; set; }
 }

@@ -21,13 +21,14 @@ public class UIController : MonoBehaviour
     public enum UIScreen
     {
         None,
-        Shop
+        Shop,
+        BuildingUpgradeMenu
     }
     private void Start()
     {
         EnableScreen(UIScreen.None);
     }
-    public void EnableScreen(UIScreen screen)
+    public GameObject EnableScreen(UIScreen screen)
     {
         _UIScreens[_currentScreen].ScreenGameObject.SetActive(false);
         for(int i = 0; i  < _UIScreens.Length; i++)
@@ -36,8 +37,16 @@ public class UIController : MonoBehaviour
             {
                 _currentScreen = i;
                 _UIScreens[i].ScreenGameObject.SetActive(true);
-                return;
+                return _UIScreens[i].ScreenGameObject;
             }
         }
+        return null;
+    }
+    public bool CloseScreenIfActive(UIScreen screen)
+    {
+        var _screen = _UIScreens[_currentScreen];
+        bool isActive = _screen.ScreenGameObject.activeSelf;
+        _screen.ScreenGameObject.SetActive(false);
+        return isActive;
     }
 }

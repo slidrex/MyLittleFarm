@@ -7,31 +7,37 @@ using UnityEngine;
 public class PlaceableObject : MonoBehaviour
 {
     private Action _sendPlaceRequest;
+    public long Id { get; private set; }
     private Action<Collider2D, bool> _onTriggerEnter;
     private Collider2D _collider;
     private SpriteRenderer _spriteRenderer;
-    private bool _isCarring;
+    public bool IsConstructed { get; private set; }
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _collider = GetComponent<Collider2D>();
+    }
+    public void Construct(long id)
+    {
+        IsConstructed = true;
+        Id = id;
     }
     public void StartCarring(Action onClick, Action<Collider2D, bool> onTriggerEnter)
     {
         _collider.isTrigger = true;
         _onTriggerEnter = onTriggerEnter;
         _sendPlaceRequest = onClick;
-        _isCarring = true;
     }
     public void ChangeColor(Color32 color)
     {
         _spriteRenderer.color = color;
     }
-    public void StopCarring()
+    public void Place(long id)
     {
+        IsConstructed = true;
         _collider.isTrigger = false;
         _onTriggerEnter = null;
-        _isCarring = false;
+        Id = id;
         _sendPlaceRequest = null;
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -44,7 +50,7 @@ public class PlaceableObject : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        if(_isCarring)
+        if(IsConstructed == false)
             _sendPlaceRequest.Invoke();
     }
 }

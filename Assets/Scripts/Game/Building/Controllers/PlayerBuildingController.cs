@@ -1,3 +1,4 @@
+using Assets.Scripts.Game.Building.Models;
 using Newtonsoft.Json;
 using Riptide;
 using System.Security.Cryptography;
@@ -52,11 +53,16 @@ public class PlayerBuildingController : MonoBehaviour
         _isNotCollided = !isEnterOrExit;
         SetBlockingColor();
     }
+    public void DestroyHoldingBuilding()
+    {
+        Destroy(_placeableObject.gameObject);
+        _placeableObject = null;
+    }
     private void OnPlaceableObjectClick()
     {
         if (!_isInsidePlot || !_isNotCollided) return;
         
-        _placeableObject.StopCarring();
+        
         ReturnObjectColor();
         var placeRequest = Message.Create(MessageSendMode.Reliable, ClientToServer.BUILD_REQUEST);
         LoginResponse targetResponse = ClientManager.TargetResponse;
@@ -64,9 +70,19 @@ public class PlayerBuildingController : MonoBehaviour
         var buildRequest = new BuildRequest(targetResponse.Plot.PlotID, (int)_placeableObject.transform.position.x, (int)_placeableObject.transform.position.y, 0);
         string buildRequestJSON = JsonConvert.SerializeObject(buildRequest);
         placeRequest.AddString(buildRequestJSON);
-
+        Instance.DestroyHoldingBuilding();
         ClientManager.Client.Send(placeRequest);
         _placeableObject = null;
+    }
+    [MessageHandler((ushort)ServerToClient.BUILD_RESPONSE)]
+    public static void BuildResponseHandler(Message message)
+    {
+        bool isSuccessful = message.GetBool();
+        if (isSuccessful)
+        {
+            var buildingResponse = JsonConvert.DeserializeObject<BuildingModel>(message.GetString());
+            FarmCompositeRoot.Instance.BuildingController.InstantiateBuilding(buildingResponse);
+        }
     }
     private void OnPlaceableObjectChangedPosition(Vector2 newPosition)
     {
